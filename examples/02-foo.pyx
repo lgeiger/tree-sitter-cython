@@ -1,4 +1,4 @@
-# `foo.bzl`
+# `foo.pyx`
 var = [] # declare a list
 
 def fct(): # declare a function
