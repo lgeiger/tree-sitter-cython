@@ -16,38 +16,34 @@
 const Python = require("tree-sitter-python/grammar");
 
 const PREC = Object.assign({}, Python.PREC, {
+  keyword_identifier: -3,
+  c_type: 1,
+  gil_spec_exception_value: 1,
   new: 23,
   cast: 24,
+  lambda_parameters: 25,
 });
 
 module.exports = grammar(Python, {
   name: "cython",
 
-  // conflicts: ($, original) =>
-  //   original.filter((conflict) => {
-  //     const unnecessaryConflicts = [
-  //       // ["type_alias_statement", "primary_expression"],
-  //       // ["with_item", "_collection_elements"],
-  //       // ["named_expression", "as_pattern"],
-  //     ];
-  //
-  //     return !unnecessaryConflicts.some(pair =>
-  //       conflict.length === 2
-  //       && ("name" in conflict[0] && conflict[0].name === pair[0])
-  //       && ("name" in conflict[1] && conflict[1].name === pair[1])
-  //     );
-  //   }).concat([
-  //     // [$.argument_list, $.tuple],
-  //     // [$.type],
-  //   ]),
-
   conflicts: ($, original) =>
-    original.concat([
+    original.filter((conflict) => {
+      const unnecessaryConflicts = [
+        ["match_statement", "primary_expression"],
+        ["type_alias_statement", "primary_expression"],
+      ];
+
+      return !unnecessaryConflicts.some(pair =>
+        conflict.length === 2
+        && ("name" in conflict[0] && conflict[0].name === pair[0])
+        && ("name" in conflict[1] && conflict[1].name === pair[1])
+      );
+    }).concat([
       [$.maybe_typed_name],
-      [$.int_type, $.maybe_typed_name],
-      [$.c_name, $.maybe_typed_name],
       [$.c_name, $.cvar_decl],
-      [$.c_type, $.maybe_typed_name],
+      [$.c_type],
+      [$.argument_list, $.function_pointer_type],
     ]),
 
   rules: {
@@ -346,10 +342,18 @@ module.exports = grammar(Python, {
         alias(seq("long", "long"), "long long"),
       )),
 
+    function_pointer_type: $ =>
+      seq(
+        $.c_type,
+        "(",
+        optional(commaSep1($.c_type)),
+        ")",
+      ),
+
     // type: ['const'] (NAME ('.' PY_NAME)* | int_type | '(' type ')') ['complex'] [type_qualifier]
     c_type: $ =>
       prec.right(
-        1,
+        PREC.c_type,
         seq(
           optional(choice("const", "volatile")),
           choice(
@@ -361,7 +365,8 @@ module.exports = grammar(Python, {
               )),
             ),
             $.int_type,
-            seq("(", commaSep1($.c_type), ")"),
+            seq("(", $.c_type, ")"),
+            $.function_pointer_type, // Included here
           ),
           optional("complex"),
           repeat($.type_qualifier),
@@ -470,6 +475,27 @@ module.exports = grammar(Python, {
         "]",
       ),
 
+    lambda_parameters: $ =>
+      prec.right(
+        PREC.lambda_parameters,
+        choice(
+          $.identifier,
+          $.tuple_pattern,
+          $._parameters,
+        ),
+      ),
+
+    lambda: $ =>
+      prec(
+        PREC.lambda,
+        seq(
+          "lambda",
+          field("parameters", optional($.lambda_parameters)),
+          ":",
+          field("body", $.expression),
+        ),
+      ),
+
     c_parameters: $ => seq("(", optional($._typedargslist), ")"),
     _typedargslist: $ =>
       seq(
@@ -485,7 +511,7 @@ module.exports = grammar(Python, {
     exception_value: $ =>
       choice(
         prec(
-          1,
+          PREC.gil_spec_exception_value,
           seq(
             "except",
             choice(
@@ -683,7 +709,7 @@ module.exports = grammar(Python, {
 
     keyword_identifier: $ =>
       prec(
-        -3,
+        PREC.keyword_identifier,
         alias(
           choice(
             "print",
