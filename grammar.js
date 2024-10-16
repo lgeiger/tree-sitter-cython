@@ -375,36 +375,28 @@ module.exports = grammar(Python, {
       ),
 
     maybe_typed_name: $ =>
-      seq(
-        optional(choice("const", "volatile")),
-        choice(
-          seq(
-            field("type", choice($.identifier, $.int_type)),
-            optional(seq(
-              repeat(seq(
-                ".",
-                $.identifier,
-              )),
-              optional("complex"),
-              repeat($.type_qualifier),
+      choice(
+        seq(
+          optional(choice("const", "volatile")),
+          field("type", choice($.identifier, $.int_type)),
+          optional(seq(
+            repeat(seq(
+              ".",
+              $.identifier,
             )),
-            optional(choice($.identifier, $.operator_name)),
-            repeat($.type_qualifier),
-          ),
-          seq(
-            optional(field("type", choice($.identifier, $.int_type))),
-            choice(
-              $.int_type,
-              seq("(", commaSep1(seq(optional($.type_qualifier), $.c_type)), ")"),
-            ),
             optional("complex"),
             repeat($.type_qualifier),
-            optional(choice("const", "volatile")),
-            repeat($.type_qualifier),
-            optional(choice($.identifier, $.operator_name, $.c_function_declaration)),
-          ),
+          )),
+          field("name", optional(choice($.identifier, $.operator_name))),
+          repeat($.type_qualifier),
+        ),
+        seq(
+          optional(choice("const", "volatile")),
+          field("name", choice($.identifier, $.operator_name)),
+          repeat($.type_qualifier),
         ),
       ),
+
     // type_qualifier: '*' | '**' | '&' | type_index ('.' NAME [type_index])*
     type_qualifier: $ =>
       choice(
