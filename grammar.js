@@ -7,9 +7,6 @@
  * @see {@link https://bazel.build/rules/language|official language guide}
  */
 
-/* eslint-disable arrow-parens */
-/* eslint-disable camelcase */
-/* eslint-disable-next-line spaced-comment */
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
 
@@ -34,11 +31,11 @@ module.exports = grammar(Python, {
         ["type_alias_statement", "primary_expression"],
       ];
 
-      return !unnecessaryConflicts.some(pair =>
+      return !unnecessaryConflicts.some(pair => (
         conflict.length === 2
         && ("name" in conflict[0] && conflict[0].name === pair[0])
         && ("name" in conflict[1] && conflict[1].name === pair[1])
-      );
+      ));
     }).concat([
       [$.maybe_typed_name],
       [$.c_name, $.cvar_decl],
