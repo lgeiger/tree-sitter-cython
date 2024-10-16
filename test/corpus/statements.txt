@@ -1,4 +1,122 @@
 ================================================================================
+Import statements
+================================================================================
+
+import a, b
+import b.c as d
+import a.b.c
+
+--------------------------------------------------------------------------------
+
+(module
+  (import_statement
+    (dotted_name
+      (identifier))
+    (dotted_name
+      (identifier)))
+  (import_statement
+    (aliased_import
+      (dotted_name
+        (identifier)
+        (identifier))
+      (identifier)))
+  (import_statement
+    (dotted_name
+      (identifier)
+      (identifier)
+      (identifier))))
+
+================================================================================
+Import-from statements
+================================================================================
+
+from a import b
+from a import *
+from a import (b, c)
+from a.b import c
+from . import b
+from .. import b
+from .a import b
+from ..a import b
+
+--------------------------------------------------------------------------------
+
+(module
+  (import_from_statement
+    (dotted_name
+      (identifier))
+    (dotted_name
+      (identifier)))
+  (import_from_statement
+    (dotted_name
+      (identifier))
+    (wildcard_import))
+  (import_from_statement
+    (dotted_name
+      (identifier))
+    (dotted_name
+      (identifier))
+    (dotted_name
+      (identifier)))
+  (import_from_statement
+    (dotted_name
+      (identifier)
+      (identifier))
+    (dotted_name
+      (identifier)))
+  (import_from_statement
+    (relative_import
+      (import_prefix))
+    (dotted_name
+      (identifier)))
+  (import_from_statement
+    (relative_import
+      (import_prefix))
+    (dotted_name
+      (identifier)))
+  (import_from_statement
+    (relative_import
+      (import_prefix)
+      (dotted_name
+        (identifier)))
+    (dotted_name
+      (identifier)))
+  (import_from_statement
+    (relative_import
+      (import_prefix)
+      (dotted_name
+        (identifier)))
+    (dotted_name
+      (identifier))))
+
+================================================================================
+Future import statements
+================================================================================
+
+from __future__ import print_statement
+from __future__ import python4
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
+--------------------------------------------------------------------------------
+
+(module
+  (future_import_statement
+    (dotted_name
+      (identifier)))
+  (future_import_statement
+    (dotted_name
+      (identifier)))
+  (future_import_statement
+    (dotted_name
+      (identifier))
+    (dotted_name
+      (identifier))
+    (dotted_name
+      (identifier))
+    (dotted_name
+      (identifier))))
+
+================================================================================
 Print statements
 ================================================================================
 
@@ -6,6 +124,7 @@ print a
 print b, c
 print 0 or 1, 1 or 0,
 print 0 or 1
+print not True
 
 --------------------------------------------------------------------------------
 
@@ -25,7 +144,10 @@ print 0 or 1
   (print_statement
     (boolean_operator
       (integer)
-      (integer))))
+      (integer)))
+  (print_statement
+    (not_operator
+      (true))))
 
 ================================================================================
 Print statements with redirection
@@ -63,10 +185,8 @@ assert b, c
 
 (module
   (assert_statement
-    (assert_keyword)
     (identifier))
   (assert_statement
-    (assert_keyword)
     (identifier)
     (identifier)))
 
@@ -352,6 +472,117 @@ for x, in [(1,), (2,), (3,)]:
         (identifier)))))
 
 ================================================================================
+Try statements
+================================================================================
+
+try:
+  a
+except b:
+  c
+except d as e:
+  f
+except g, h:
+  i
+except:
+  j
+
+try:
+  a
+except b:
+  c
+  d
+else:
+  e
+finally:
+  f
+
+try:
+  a
+except* b:
+  c
+except* d as e:
+  f
+else:
+  g
+finally:
+  h
+
+--------------------------------------------------------------------------------
+
+(module
+  (try_statement
+    body: (block
+      (expression_statement
+        (identifier)))
+    (except_clause
+      (identifier)
+      (block
+        (expression_statement
+          (identifier))))
+    (except_clause
+      (as_pattern
+        (identifier)
+        alias: (as_pattern_target
+          (identifier)))
+      (block
+        (expression_statement
+          (identifier))))
+    (except_clause
+      (identifier)
+      (identifier)
+      (block
+        (expression_statement
+          (identifier))))
+    (except_clause
+      (block
+        (expression_statement
+          (identifier)))))
+  (try_statement
+    body: (block
+      (expression_statement
+        (identifier)))
+    (except_clause
+      (identifier)
+      (block
+        (expression_statement
+          (identifier))
+        (expression_statement
+          (identifier))))
+    (else_clause
+      body: (block
+        (expression_statement
+          (identifier))))
+    (finally_clause
+      (block
+        (expression_statement
+          (identifier)))))
+  (try_statement
+    body: (block
+      (expression_statement
+        (identifier)))
+    (except_group_clause
+      (identifier)
+      (block
+        (expression_statement
+          (identifier))))
+    (except_group_clause
+      (as_pattern
+        (identifier)
+        alias: (as_pattern_target
+          (identifier)))
+      (block
+        (expression_statement
+          (identifier))))
+    (else_clause
+      body: (block
+        (expression_statement
+          (identifier))))
+    (finally_clause
+      (block
+        (expression_statement
+          (identifier))))))
+
+================================================================================
 With statements
 ================================================================================
 
@@ -573,12 +804,20 @@ def e(*list: str):
 def e(**list: str):
   pass
 
+def f():
+  nonlocal a
+
 def g(h, i, /, j, *, k=100, **kwarg):
   return h,i,j,k,kwarg
 
 def h(*a):
   i((*a))
   j(((*a)))
+
+def foo():
+    pass \
+\
+\
 
 --------------------------------------------------------------------------------
 
@@ -614,6 +853,12 @@ def h(*a):
           (identifier))))
     body: (block
       (pass_statement)))
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (block
+      (nonlocal_statement
+        (identifier))))
   (function_definition
     name: (identifier)
     parameters: (parameters
@@ -655,7 +900,15 @@ def h(*a):
             (parenthesized_expression
               (parenthesized_expression
                 (list_splat
-                  (identifier))))))))))
+                  (identifier)))))))))
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (block
+      (pass_statement)))
+  (line_continuation)
+  (line_continuation)
+  (line_continuation))
 
 ================================================================================
 Empty blocks
@@ -696,18 +949,112 @@ if d:
         body: (block)))))
 
 ================================================================================
+Class definitions
+================================================================================
+
+class A:
+  def b(self):
+    return c
+class B():
+  pass
+class B(method1):
+  def method1(self):
+    return
+class C(method1, Sequence[T]):
+  pass
+class D(Sequence[T, U]):
+  pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (class_definition
+    (identifier)
+    (block
+      (function_definition
+        (identifier)
+        (parameters
+          (identifier))
+        (block
+          (return_statement
+            (identifier))))))
+  (class_definition
+    (identifier)
+    (argument_list)
+    (block
+      (pass_statement)))
+  (class_definition
+    (identifier)
+    (argument_list
+      (identifier))
+    (block
+      (function_definition
+        (identifier)
+        (parameters
+          (identifier))
+        (block
+          (return_statement)))))
+  (class_definition
+    (identifier)
+    (argument_list
+      (identifier)
+      (subscript
+        (identifier)
+        (identifier)))
+    (block
+      (pass_statement)))
+  (class_definition
+    (identifier)
+    (argument_list
+      (subscript
+        (identifier)
+        (identifier)
+        (identifier)))
+    (block
+      (pass_statement))))
+
+================================================================================
+Class definitions with superclasses
+================================================================================
+
+class A(B, C):
+  def d():
+    e
+
+--------------------------------------------------------------------------------
+
+(module
+  (class_definition
+    (identifier)
+    (argument_list
+      (identifier)
+      (identifier))
+    (block
+      (function_definition
+        (identifier)
+        (parameters)
+        (block
+          (expression_statement
+            (identifier)))))))
+
+================================================================================
 Decorated definitions
 ================================================================================
 
 @a.b
-@d(1)
-@e[2].f.g
-def f():
-g
+class C:
+  @d(1)
+  @e[2].f.g
+  def f():
+    g
 
-@f()
-async def f():
-g
+  @f()
+  async def f():
+    g
+
+@buttons[0].clicked.connect
+def spam():
+    ...
 
 --------------------------------------------------------------------------------
 
@@ -717,11 +1064,41 @@ g
       (attribute
         (identifier)
         (identifier)))
-    (decorator
-      (call
-        (identifier)
-        (argument_list
-          (integer))))
+    (class_definition
+      (identifier)
+      (block
+        (decorated_definition
+          (decorator
+            (call
+              (identifier)
+              (argument_list
+                (integer))))
+          (decorator
+            (attribute
+              (attribute
+                (subscript
+                  (identifier)
+                  (integer))
+                (identifier))
+              (identifier)))
+          (function_definition
+            (identifier)
+            (parameters)
+            (block
+              (expression_statement
+                (identifier)))))
+        (decorated_definition
+          (decorator
+            (call
+              (identifier)
+              (argument_list)))
+          (function_definition
+            (identifier)
+            (parameters)
+            (block
+              (expression_statement
+                (identifier))))))))
+  (decorated_definition
     (decorator
       (attribute
         (attribute
@@ -733,19 +1110,38 @@ g
     (function_definition
       (identifier)
       (parameters)
-      (block)))
-  (expression_statement
-    (identifier))
-  (decorated_definition
-    (decorator
-      (call
-        (identifier)
-        (argument_list)))
-    (function_definition
+      (block
+        (expression_statement
+          (ellipsis))))))
+
+================================================================================
+Raise statements
+================================================================================
+
+raise
+raise RuntimeError('NO')
+raise RunTimeError('NO') from e
+
+--------------------------------------------------------------------------------
+
+(module
+  (raise_statement)
+  (raise_statement
+    (call
       (identifier)
-      (parameters)
-      (block)))
-  (expression_statement
+      (argument_list
+        (string
+          (string_start)
+          (string_content)
+          (string_end)))))
+  (raise_statement
+    (call
+      (identifier)
+      (argument_list
+        (string
+          (string_start)
+          (string_content)
+          (string_end))))
     (identifier)))
 
 ================================================================================
@@ -832,6 +1228,11 @@ if c:
     # three
       # four
 
+def a():
+    if b:
+        b # comment
+    b # comment
+
 # five
 
 --------------------------------------------------------------------------------
@@ -850,6 +1251,19 @@ if c:
       (expression_statement
         (identifier))
       (comment)
+      (comment)))
+  (function_definition
+    (identifier)
+    (parameters)
+    (block
+      (if_statement
+        (identifier)
+        (block
+          (expression_statement
+            (identifier))
+          (comment)))
+      (expression_statement
+        (identifier))
       (comment)))
   (comment))
 
@@ -870,12 +1284,30 @@ print "a"
   (comment))
 
 ================================================================================
+Global statements
+================================================================================
+
+global a
+global a, b
+
+--------------------------------------------------------------------------------
+
+(module
+  (global_statement
+    (identifier))
+  (global_statement
+    (identifier)
+    (identifier)))
+
+================================================================================
 Exec statements
 ================================================================================
 
 exec '1+1'
 exec 'x+=1' in None
 exec 'x+=1' in a, b
+func = "print"
+exec func in {}
 
 --------------------------------------------------------------------------------
 
@@ -897,7 +1329,17 @@ exec 'x+=1' in a, b
       (string_content)
       (string_end))
     (identifier)
-    (identifier)))
+    (identifier))
+  (expression_statement
+    (assignment
+      (identifier)
+      (string
+        (string_start)
+        (string_content)
+        (string_end))))
+  (exec_statement
+    (identifier)
+    (dictionary)))
 
 ================================================================================
 Extra newlines
@@ -996,3 +1438,191 @@ foo; bar;
     (identifier))
   (expression_statement
     (identifier)))
+
+================================================================================
+Type Alias Statements
+================================================================================
+
+type Point = tuple[float, float]
+type Point[T] = tuple[T, T]
+type IntFunc[**P] = Callable[P, int]  # ParamSpec
+type LabeledTuple[*Ts] = tuple[str, *Ts]  # TypeVarTuple
+type HashableSequence[T: Hashable] = Sequence[T]  # TypeVar with bound
+type IntOrStrSequence[T: (int, str)] = Sequence[T]  # TypeVar with constraints
+
+--------------------------------------------------------------------------------
+
+(module
+  (type_alias_statement
+    (type
+      (identifier))
+    (type
+      (generic_type
+        (identifier)
+        (type_parameter
+          (type
+            (identifier))
+          (type
+            (identifier))))))
+  (type_alias_statement
+    (type
+      (generic_type
+        (identifier)
+        (type_parameter
+          (type
+            (identifier)))))
+    (type
+      (generic_type
+        (identifier)
+        (type_parameter
+          (type
+            (identifier))
+          (type
+            (identifier))))))
+  (type_alias_statement
+    (type
+      (generic_type
+        (identifier)
+        (type_parameter
+          (type
+            (splat_type
+              (identifier))))))
+    (type
+      (generic_type
+        (identifier)
+        (type_parameter
+          (type
+            (identifier))
+          (type
+            (identifier))))))
+  (comment)
+  (type_alias_statement
+    (type
+      (generic_type
+        (identifier)
+        (type_parameter
+          (type
+            (splat_type
+              (identifier))))))
+    (type
+      (generic_type
+        (identifier)
+        (type_parameter
+          (type
+            (identifier))
+          (type
+            (splat_type
+              (identifier)))))))
+  (comment)
+  (type_alias_statement
+    (type
+      (generic_type
+        (identifier)
+        (type_parameter
+          (type
+            (constrained_type
+              (type
+                (identifier))
+              (type
+                (identifier)))))))
+    (type
+      (generic_type
+        (identifier)
+        (type_parameter
+          (type
+            (identifier))))))
+  (comment)
+  (type_alias_statement
+    (type
+      (generic_type
+        (identifier)
+        (type_parameter
+          (type
+            (constrained_type
+              (type
+                (identifier))
+              (type
+                (tuple
+                  (identifier)
+                  (identifier))))))))
+    (type
+      (generic_type
+        (identifier)
+        (type_parameter
+          (type
+            (identifier))))))
+  (comment))
+
+================================================================================
+Generic Function Definitions
+================================================================================
+
+def more_generic[T, *Ts, **P]():
+    type TA[T2, *Ts2, **P2] = tuple[Callable[P, tuple[T, *Ts]], Callable[P2, tuple[T2, *Ts2]]]
+    return TA
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (type_parameter
+      (type
+        (identifier))
+      (type
+        (splat_type
+          (identifier)))
+      (type
+        (splat_type
+          (identifier))))
+    (parameters)
+    (block
+      (type_alias_statement
+        (type
+          (generic_type
+            (identifier)
+            (type_parameter
+              (type
+                (identifier))
+              (type
+                (splat_type
+                  (identifier)))
+              (type
+                (splat_type
+                  (identifier))))))
+        (type
+          (generic_type
+            (identifier)
+            (type_parameter
+              (type
+                (generic_type
+                  (identifier)
+                  (type_parameter
+                    (type
+                      (identifier))
+                    (type
+                      (generic_type
+                        (identifier)
+                        (type_parameter
+                          (type
+                            (identifier))
+                          (type
+                            (splat_type
+                              (identifier)))))))))
+              (type
+                (generic_type
+                  (identifier)
+                  (type_parameter
+                    (type
+                      (identifier))
+                    (type
+                      (generic_type
+                        (identifier)
+                        (type_parameter
+                          (type
+                            (identifier))
+                          (type
+                            (splat_type
+                              (identifier)))))))))))))
+      (return_statement
+        (identifier)))))

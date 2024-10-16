@@ -177,7 +177,7 @@ bool tree_sitter_cython_external_scanner_scan(void *payload, TSLexer *lexer,
               lexer->lookahead == 'U') {
             // In bytes string, \N{...}, \uXXXX and \UXXXXXXXX are
             // not escape sequences
-            // https://docs.starlark.org/3/reference/lexical_analysis.html#string-and-bytes-literals
+            // https://docs.python.org/3/reference/lexical_analysis.html#string-and-bytes-literals
             advance(lexer);
           } else {
             lexer->result_symbol = STRING_CONTENT;
