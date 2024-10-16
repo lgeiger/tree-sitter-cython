@@ -1,4 +1,4 @@
-"Starlark grammar for tree-sitter"
+"Cython grammar for tree-sitter"
 
 from ._binding import language
 

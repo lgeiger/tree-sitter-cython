@@ -1,12 +1,12 @@
 [package]
-name = "tree-sitter-starlark"
-description = "Starlark grammar for tree-sitter"
+name = "tree-sitter-cython"
+description = "Cython grammar for tree-sitter"
 version = "1.2.0"
 authors = ["Amaan Qureshi <amaanq12@gmail.com>"]
 license = "MIT"
-keywords = ["incremental", "parsing", "tree-sitter", "starlark", "bazel"]
+keywords = ["incremental", "parsing", "tree-sitter", "cython", "bazel"]
 categories = ["parsing", "text-editors"]
-repository = "https://github.com/tree-sitter-grammars/tree-sitter-starlark"
+repository = "https://github.com/tree-sitter-grammars/tree-sitter-cython"
 edition = "2021"
 autoexamples = false
 

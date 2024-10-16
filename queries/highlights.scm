@@ -252,7 +252,7 @@
 ;; Error
 (ERROR) @error
 
-;; Starlark-specific
+;; Cython-specific
 
 ;; Assertion calls
 (assert_keyword) @keyword

@@ -3,10 +3,10 @@ requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "tree-sitter-starlark"
-description = "Starlark grammar for tree-sitter"
+name = "tree-sitter-cython"
+description = "Cython grammar for tree-sitter"
 version = "1.2.0"
-keywords = ["incremental", "parsing", "tree-sitter", "starlark"]
+keywords = ["incremental", "parsing", "tree-sitter", "cython"]
 classifiers = [
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
@@ -19,7 +19,7 @@ license.text = "MIT"
 readme = "README.md"
 
 [project.urls]
-Homepage = "https://github.com/tree-sitter/tree-sitter-starlark"
+Homepage = "https://github.com/tree-sitter/tree-sitter-cython"
 
 [project.optional-dependencies]
 core = ["tree-sitter~=0.21"]

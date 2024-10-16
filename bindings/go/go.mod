@@ -1,4 +1,4 @@
-module github.com/tree-sitter/tree-sitter-starlark
+module github.com/tree-sitter/tree-sitter-cython
 
 go 1.22
 

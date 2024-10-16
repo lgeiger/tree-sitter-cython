@@ -2,10 +2,10 @@ prefix=@PREFIX@
 libdir=@LIBDIR@
 includedir=@INCLUDEDIR@
 
-Name: tree-sitter-starlark
-Description: Starlark grammar for tree-sitter
+Name: tree-sitter-cython
+Description: Cython grammar for tree-sitter
 URL: @URL@
 Version: @VERSION@
 Requires: @REQUIRES@
-Libs: -L${libdir} @ADDITIONAL_LIBS@ -ltree-sitter-starlark
+Libs: -L${libdir} @ADDITIONAL_LIBS@ -ltree-sitter-cython
 Cflags: -I${includedir}

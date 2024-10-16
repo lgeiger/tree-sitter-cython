@@ -1,9 +1,9 @@
 /**
- * @file Starlark grammar for tree-sitter
+ * @file Cython grammar for tree-sitter
  * @author Amaan Qureshi <amaanq12@gmail.com>
  * @license MIT
- * @see {@link https://github.com/bazelbuild/starlark|official website}
- * @see {@link https://github.com/bazelbuild/starlark/blob/master/spec.md|official syntax spec}
+ * @see {@link https://github.com/bazelbuild/cython|official website}
+ * @see {@link https://github.com/bazelbuild/cython/blob/master/spec.md|official syntax spec}
  * @see {@link https://bazel.build/rules/language|official language guide}
  */
 
@@ -16,7 +16,7 @@
 const Python = require('tree-sitter-python/grammar');
 
 module.exports = grammar(Python, {
-  name: 'starlark',
+  name: 'cython',
 
   conflicts: (_, original) => original.filter((e) =>
     !(e.length == 2 && e[0].name == 'type_alias_statement' && e[1].name =='primary_expression'),

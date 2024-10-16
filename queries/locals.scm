@@ -75,13 +75,13 @@
 (named_expression
   (identifier) @definition.var)
 
-(as_pattern 
+(as_pattern
   alias: (as_pattern_target) @definition.var)
 
 ;;; REFERENCES
 (identifier) @reference
 
-;; Starlark-specific
+;; Cython-specific
 
 ; Loads
 ((call

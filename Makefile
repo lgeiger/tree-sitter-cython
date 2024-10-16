@@ -1,6 +1,6 @@
 VERSION := 1.2.0
 
-LANGUAGE_NAME := tree-sitter-starlark
+LANGUAGE_NAME := tree-sitter-cython
 
 # repository
 SRC_DIR := src

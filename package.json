@@ -1,7 +1,7 @@
 {
-  "name": "tree-sitter-starlark",
+  "name": "tree-sitter-cython",
   "version": "1.2.0",
-  "description": "Starlark grammar for tree-sitter",
+  "description": "cython grammar for tree-sitter",
   "repository": "github:tree-sitter-grammars/tree-sitter-python",
   "license": "MIT",
   "author": "Amaan Qureshi <amaanq12@gmail.com>",
@@ -19,10 +19,7 @@
     "incremental",
     "parsing",
     "tree-sitter",
-    "starlark",
-    "bazel",
-    "bzl",
-    "build"
+    "cython"
   ],
   "dependencies": {
     "tree-sitter-python": "^0.21.0",

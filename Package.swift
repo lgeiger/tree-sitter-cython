@@ -2,14 +2,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "TreeSitterStarlark",
+    name: "TreeSitterCython",
     platforms: [.macOS(.v10_13), .iOS(.v11)],
     products: [
-        .library(name: "TreeSitterStarlark", targets: ["TreeSitterStarlark"]),
+        .library(name: "TreeSitterCython", targets: ["TreeSitterCython"]),
     ],
     dependencies: [],
     targets: [
-        .target(name: "TreeSitterStarlark",
+        .target(name: "TreeSitterCython",
                 path: ".",
                 exclude: [
                     "binding.gyp",
