@@ -36,9 +36,7 @@ jobs:
         uses: tree-sitter/setup-action/cli@v1
       - name: Set up examples
         run: |-
-          git clone https://github.com/bazelbuild/starlark examples/starlark --single-branch --depth=1 --filter=blob:none
-          git clone https://github.com/mcuadros/ascode examples/ascode --single-branch --depth=1 --filter=blob:none
-          git clone https://github.com/cruise-automation/isopod examples/isopod --single-branch --depth=1 --filter=blob:none
+          git clone https://github.com/cython/cython Demos --single-branch --depth=1 --filter=blob:none
       - name: Run tests
         uses: tree-sitter/parser-test-action@v2
         with:
@@ -48,23 +46,5 @@ jobs:
         uses: tree-sitter/parse-action@v4
         with:
           files: |
-            examples/**/*.bzl
-            examples/**/*.star
-            examples/**/*.ipd
-            !examples/starlark/test_suite/testdata/go/assign.star
-            !examples/starlark/test_suite/testdata/go/builtins.star
-            !examples/starlark/test_suite/testdata/go/dict.star
-            !examples/starlark/test_suite/testdata/go/function.star
-            !examples/starlark/test_suite/testdata/go/int.star
-            !examples/starlark/test_suite/testdata/go/list.star
-            !examples/starlark/test_suite/testdata/go/misc.star
-            !examples/starlark/test_suite/testdata/go/string.star
-            !examples/starlark/test_suite/testdata/go/tuple.star
-            !examples/starlark/test_suite/testdata/java/dict.star
-            !examples/starlark/test_suite/testdata/java/list_mutation.star
-            !examples/starlark/test_suite/testdata/java/min_max.star
-            !examples/starlark/test_suite/testdata/java/reversed.star
-            !examples/starlark/test_suite/testdata/java/string_slice_index.star
-            !examples/starlark/test_suite/testdata/rust/int.star
-            !examples/starlark/test_suite/testdata/rust/josharian_fuzzing.star
-            !examples/starlark/test_suite/testdata/rust/mutation_during_iteration.star
+            examples/**/*.pyx
+            examples/**/*.pxd
