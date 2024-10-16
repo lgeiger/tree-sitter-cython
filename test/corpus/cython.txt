@@ -1,0 +1,589 @@
+================================================================================
+Cython import statements
+================================================================================
+
+from foo import bar
+cimport foo
+from foo cimport bar
+from foo import bar, baz
+from foo cimport bar, baz
+
+--------------------------------------------------------------------------------
+
+(module
+  (import_from_statement
+    (dotted_name
+      (identifier))
+    (dotted_name
+      (identifier)))
+  (import_statement
+    (dotted_name
+      (identifier)))
+  (import_from_statement
+    (dotted_name
+      (identifier))
+    (dotted_name
+      (identifier)))
+  (import_from_statement
+    (dotted_name
+      (identifier))
+    (dotted_name
+      (identifier))
+    (dotted_name
+      (identifier)))
+  (import_from_statement
+    (dotted_name
+      (identifier))
+    (dotted_name
+      (identifier))
+    (dotted_name
+      (identifier))))
+
+================================================================================
+Cython definitions
+================================================================================
+
+cdef foo(int bar):
+    return bar
+
+cdef void foo(int bar):
+    return bar
+
+cdef foo(bar, int baz):
+    cdef int qux
+    return bar
+
+cdef foo(bar, int baz):
+    cdef int qux
+    return bar
+
+--------------------------------------------------------------------------------
+
+(module
+  (cdef_statement
+    (cvar_def
+      (maybe_typed_name
+        (identifier))
+      (c_function_definition
+        (c_parameters
+          (maybe_typed_name
+            (int_type)
+            (identifier)))
+        (block
+          (return_statement
+            (identifier))))))
+  (cdef_statement
+    (cvar_def
+      (maybe_typed_name
+        (identifier)
+        (identifier))
+      (c_function_definition
+        (c_parameters
+          (maybe_typed_name
+            (int_type)
+            (identifier)))
+        (block
+          (return_statement
+            (identifier))))))
+  (cdef_statement
+    (cvar_def
+      (maybe_typed_name
+        (identifier))
+      (c_function_definition
+        (c_parameters
+          (maybe_typed_name
+            (identifier))
+          (maybe_typed_name
+            (int_type)
+            (identifier)))
+        (block
+          (cdef_statement
+            (cvar_def
+              (maybe_typed_name
+                (int_type)
+                (identifier))))
+          (return_statement
+            (identifier))))))
+  (cdef_statement
+    (cvar_def
+      (maybe_typed_name
+        (identifier))
+      (c_function_definition
+        (c_parameters
+          (maybe_typed_name
+            (identifier))
+          (maybe_typed_name
+            (int_type)
+            (identifier)))
+        (block
+          (cdef_statement
+            (cvar_def
+              (maybe_typed_name
+                (int_type)
+                (identifier))))
+          (return_statement
+            (identifier)))))))
+
+================================================================================
+Cython cdef classes
+================================================================================
+
+cdef class MyClass:
+    cdef int x
+    cdef double y
+
+    def __init__(self, int x, double y):
+        self.x = x
+        self.y = y
+
+    cdef int get_x(self):
+        return self.x
+
+--------------------------------------------------------------------------------
+
+(module
+  (cdef_statement
+    (cdef_type_declaration
+      (class_definition
+        (identifier)
+        (block
+          (cdef_statement
+            (cvar_def
+              (maybe_typed_name
+                (int_type)
+                (identifier))))
+          (cdef_statement
+            (cvar_def
+              (maybe_typed_name
+                (int_type)
+                (identifier))))
+          (function_definition
+            (identifier)
+            (parameters
+              (identifier)
+              (typed_parameter
+                (c_type
+                  (int_type))
+                (identifier))
+              (typed_parameter
+                (c_type
+                  (int_type))
+                (identifier)))
+            (block
+              (expression_statement
+                (assignment
+                  (attribute
+                    (identifier)
+                    (identifier))
+                  (identifier)))
+              (expression_statement
+                (assignment
+                  (attribute
+                    (identifier)
+                    (identifier))
+                  (identifier)))))
+          (cdef_statement
+            (cvar_def
+              (maybe_typed_name
+                (int_type)
+                (identifier))
+              (c_function_definition
+                (c_parameters
+                  (maybe_typed_name
+                    (identifier)))
+                (block
+                  (return_statement
+                    (attribute
+                      (identifier)
+                      (identifier))))))))))))
+
+================================================================================
+Cython cpdef functions
+================================================================================
+
+cpdef int fibonacci(int n):
+    cdef int a = 0, b = 1
+    for i in range(n):
+        a, b = b, a + b
+    return a
+
+--------------------------------------------------------------------------------
+
+(module
+  (cdef_statement
+    (cvar_def
+      (maybe_typed_name
+        (int_type)
+        (identifier))
+      (c_function_definition
+        (c_parameters
+          (maybe_typed_name
+            (int_type)
+            (identifier)))
+        (block
+          (cdef_statement
+            (cvar_def
+              (maybe_typed_name
+                (int_type)
+                (identifier))
+              (integer)
+              (identifier)
+              (integer)))
+          (for_statement
+            (comparison_operator
+              (identifier)
+              (call
+                (identifier)
+                (argument_list
+                  (identifier))))
+            (block
+              (expression_statement
+                (assignment
+                  (pattern_list
+                    (identifier)
+                    (identifier))
+                  (expression_list
+                    (identifier)
+                    (binary_operator
+                      (identifier)
+                      (identifier)))))))
+          (return_statement
+            (identifier)))))))
+
+================================================================================
+Cython type declarations
+================================================================================
+
+cdef:
+    int i
+    double x
+    float y
+    char* s
+    int[:] arr
+    unsigned long long very_big_num
+
+ctypedef unsigned long long ullong
+
+cdef ullong factorial(int n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n - 1)
+
+--------------------------------------------------------------------------------
+
+(module
+  (cdef_statement
+    (cvar_def
+      (maybe_typed_name
+        (int_type)
+        (identifier)))
+    (cvar_def
+      (maybe_typed_name
+        (int_type)
+        (identifier)))
+    (cvar_def
+      (maybe_typed_name
+        (identifier)
+        (identifier)))
+    (cvar_def
+      (maybe_typed_name
+        (int_type)
+        (type_qualifier)
+        (identifier)))
+    (cvar_def
+      (maybe_typed_name
+        (int_type)
+        (type_qualifier
+          (type_index
+            (memory_view_index)))
+        (identifier)))
+    (cvar_def
+      (maybe_typed_name
+        (int_type)
+        (identifier))))
+  (ctypedef_statement
+    (cvar_decl
+      (c_type
+        (int_type))
+      (identifier)))
+  (cdef_statement
+    (cvar_def
+      (maybe_typed_name
+        (identifier)
+        (identifier))
+      (c_function_definition
+        (c_parameters
+          (maybe_typed_name
+            (int_type)
+            (identifier)))
+        (block
+          (if_statement
+            (comparison_operator
+              (identifier)
+              (integer))
+            (block
+              (return_statement
+                (integer)))
+            (else_clause
+              (block
+                (return_statement
+                  (binary_operator
+                    (identifier)
+                    (call
+                      (identifier)
+                      (argument_list
+                        (binary_operator
+                          (identifier)
+                          (integer))))))))))))))
+
+================================================================================
+Cython extern declarations
+================================================================================
+
+cdef extern from "math.h":
+    double sin(double x)
+    double cos(double x)
+    double M_PI
+
+cdef extern from "stdlib.h":
+    void* malloc(size_t size)
+    void free(void* ptr)
+
+cdef extern from *:
+    int printf(const char* format)
+
+--------------------------------------------------------------------------------
+
+(module
+  (cdef_statement
+    (extern_block
+      (string
+        (string_start)
+        (string_content)
+        (string_end))
+      (extern_suite
+        (cvar_decl
+          (c_type
+            (int_type))
+          (c_name
+            (identifier))
+          (c_function_definition
+            (c_parameters
+              (maybe_typed_name
+                (int_type)
+                (identifier)))))
+        (cvar_decl
+          (c_type
+            (int_type))
+          (c_name
+            (identifier))
+          (c_function_definition
+            (c_parameters
+              (maybe_typed_name
+                (int_type)
+                (identifier)))))
+        (cvar_decl
+          (c_type
+            (int_type))
+          (identifier)))))
+  (cdef_statement
+    (extern_block
+      (string
+        (string_start)
+        (string_content)
+        (string_end))
+      (extern_suite
+        (cvar_decl
+          (c_type
+            (identifier)
+            (type_qualifier))
+          (c_name
+            (identifier))
+          (c_function_definition
+            (c_parameters
+              (maybe_typed_name
+                (identifier)
+                (identifier)))))
+        (cvar_decl
+          (c_type
+            (identifier))
+          (c_name
+            (identifier))
+          (c_function_definition
+            (c_parameters
+              (maybe_typed_name
+                (identifier)
+                (type_qualifier)
+                (identifier))))))))
+  (cdef_statement
+    (extern_block
+      (extern_suite
+        (cvar_decl
+          (c_type
+            (int_type))
+          (c_name
+            (identifier))
+          (c_function_definition
+            (c_parameters
+              (maybe_typed_name
+                (int_type)
+                (type_qualifier)
+                (identifier)))))))))
+
+================================================================================
+Cython .pxd file syntax
+================================================================================
+
+# my_module.pxd
+cdef class MyClass:
+    cdef:
+        int x
+        double y
+
+    cdef int get_x(self)
+    cdef void set_x(self, int value)
+
+cdef extern from "some_c_header.h":
+    ctypedef struct Point:
+        int x
+        int y
+
+    void do_something(Point* p)
+
+cpdef enum Color:
+    RED = 0
+    GREEN = 1
+    BLUE = 2
+
+cdef int[:] get_memory_view(int size)
+
+ctypedef fused numeric:
+    int
+    float
+    double
+
+cdef numeric add(numeric a, numeric b)
+
+--------------------------------------------------------------------------------
+
+(module
+  (comment)
+  (cdef_statement
+    (cdef_type_declaration
+      (class_definition
+        (identifier)
+        (block
+          (cdef_statement
+            (cvar_def
+              (maybe_typed_name
+                (int_type)
+                (identifier)))
+            (cvar_def
+              (maybe_typed_name
+                (int_type)
+                (identifier))))
+          (cdef_statement
+            (cvar_def
+              (maybe_typed_name
+                (int_type)
+                (identifier))
+              (c_function_definition
+                (c_parameters
+                  (maybe_typed_name
+                    (identifier))))))
+          (cdef_statement
+            (cvar_def
+              (maybe_typed_name
+                (identifier)
+                (identifier))
+              (c_function_definition
+                (c_parameters
+                  (maybe_typed_name
+                    (identifier))
+                  (maybe_typed_name
+                    (int_type)
+                    (identifier))))))))))
+  (cdef_statement
+    (extern_block
+      (string
+        (string_start)
+        (string_content)
+        (string_end))
+      (extern_suite
+        (ctypedef_statement
+          (struct
+            (identifier)
+            (struct_suite
+              (cvar_decl
+                (c_type
+                  (int_type))
+                (identifier))
+              (cvar_decl
+                (c_type
+                  (int_type))
+                (identifier)))))
+        (cvar_decl
+          (c_type
+            (identifier))
+          (c_name
+            (identifier))
+          (c_function_definition
+            (c_parameters
+              (maybe_typed_name
+                (identifier)
+                (type_qualifier)
+                (identifier))))))))
+  (cdef_statement
+    (cdef_type_declaration
+      (ctype_declaration
+        (enum
+          (identifier)
+          (block
+            (expression_statement
+              (assignment
+                (identifier)
+                (integer)))
+            (expression_statement
+              (assignment
+                (identifier)
+                (integer)))
+            (expression_statement
+              (assignment
+                (identifier)
+                (integer))))))))
+  (cdef_statement
+    (cvar_def
+      (maybe_typed_name
+        (int_type)
+        (type_qualifier
+          (type_index
+            (memory_view_index)))
+        (identifier))
+      (c_function_definition
+        (c_parameters
+          (maybe_typed_name
+            (int_type)
+            (identifier))))))
+  (ctypedef_statement
+    (fused
+      (identifier)
+      (c_type
+        (int_type))
+      (c_type
+        (identifier))
+      (c_type
+        (int_type))))
+  (cdef_statement
+    (cvar_def
+      (maybe_typed_name
+        (identifier)
+        (identifier))
+      (c_function_definition
+        (c_parameters
+          (maybe_typed_name
+            (identifier)
+            (identifier))
+          (maybe_typed_name
+            (identifier)
+            (identifier)))))))
