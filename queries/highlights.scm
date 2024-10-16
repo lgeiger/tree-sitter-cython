@@ -182,4 +182,5 @@
   "fused"
   "property"
   "namespace"
+  "cppclass"
 ] @keyword

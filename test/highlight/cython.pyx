@@ -174,3 +174,36 @@ cdef class MyClass:
         #                         ^ property
 
 
+
+cdef extern from "list.h" namespace " ::list":
+# <- keyword
+#    ^ keyword
+#           ^ keyword
+#                ^ string
+#                               ^ keyword
+#                                         ^ string
+    cdef cppclass List[T]:
+    # <- keyword
+    #    ^ keyword
+    #             ^ constructor
+    #                  ^ constant
+        cppclass Reader:
+        # <- keyword
+        #        ^ constructor
+            T operator[](uint) except +reraise_exception
+            # <- type
+            #                  ^ keyword
+            #                         ^ operator
+            #                          ^ variable
+            uint size()
+            # <- type
+        cppclass Builder:
+        # <- keyword
+        #        ^ constructor
+            T operator[](uint) except +reraise_exception
+            # <- type
+            #                  ^ keyword
+            #                         ^ operator
+            #                          ^ variable
+            uint size()
+            # <- type
