@@ -6,3 +6,5 @@
 Cython grammar for [tree-sitter](https://github.com/tree-sitter/tree-sitter)
 
 Adapted from the [cython grammar](https://github.com/cython/cython/blob/7beedb19c43f3e865056b8181e55897b222a645b/Cython/Parser/Grammar#L4)
+
+Based on [tree-sitter-starlark](https://github.com/tree-sitter-grammars/tree-sitter-starlark/)
