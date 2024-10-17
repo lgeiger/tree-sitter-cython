@@ -200,10 +200,11 @@ cdef extern from "list.h" namespace " ::list":
         cppclass Builder:
         # <- keyword
         #        ^ constructor
-            T operator[](uint) except +reraise_exception
+            T operator[](const uint) except +reraise_exception
             # <- type
-            #                  ^ keyword
-            #                         ^ operator
-            #                          ^ variable
+            #            ^ keyword
+            #                        ^ keyword
+            #                               ^ operator
+            #                                ^ variable
             uint size()
             # <- type

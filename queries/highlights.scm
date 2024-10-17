@@ -183,4 +183,5 @@
   "property"
   "namespace"
   "cppclass"
+  "const"
 ] @keyword
