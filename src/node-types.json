@@ -1930,6 +1930,11 @@
     }
   },
   {
+    "type": "ellipsis",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "else_clause",
     "named": true,
     "fields": {
@@ -4354,6 +4359,10 @@
     "named": false
   },
   {
+    "type": "...",
+    "named": false
+  },
+  {
     "type": "/",
     "named": false
   },
@@ -4604,10 +4613,6 @@
   {
     "type": "elif",
     "named": false
-  },
-  {
-    "type": "ellipsis",
-    "named": true
   },
   {
     "type": "else",

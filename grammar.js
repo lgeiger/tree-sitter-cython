@@ -495,6 +495,8 @@ module.exports = grammar(Python, {
 
     c_parameters: $ => seq("(", optional($._typedargslist), ")"),
     _typedargslist: $ =>
+    choice(
+      "...",
       seq(
         commaSep1(seq(
           $.maybe_typed_name,
@@ -502,7 +504,8 @@ module.exports = grammar(Python, {
           optional(seq("=", choice($.expression, "*"))),
         )),
         optional(","),
-      ),
+      )
+    ),
 
     gil_spec: _ => choice(seq("with", choice("gil", "nogil")), "nogil"),
     exception_value: $ =>
