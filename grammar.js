@@ -495,17 +495,17 @@ module.exports = grammar(Python, {
 
     c_parameters: $ => seq("(", optional($._typedargslist), ")"),
     _typedargslist: $ =>
-    choice(
-      "...",
-      seq(
-        commaSep1(seq(
-          $.maybe_typed_name,
-          optional(seq(":", $.c_type)),
-          optional(seq("=", choice($.expression, "*"))),
-        )),
-        optional(","),
-      )
-    ),
+      choice(
+        "...",
+        seq(
+          commaSep1(seq(
+            $.maybe_typed_name,
+            optional(seq(":", $.c_type)),
+            optional(seq("=", choice($.expression, "*"))),
+          )),
+          optional(","),
+        ),
+      ),
 
     gil_spec: _ => choice(seq("with", choice("gil", "nogil")), "nogil"),
     exception_value: $ =>
