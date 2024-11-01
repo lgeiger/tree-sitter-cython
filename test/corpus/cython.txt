@@ -609,3 +609,170 @@ cdef cppclass Test:
               (identifier))
             (c_function_definition
               (c_parameters))))))))
+
+=====================================
+Simple external definition
+=====================================
+ctypedef class array.array [object arrayobject]
+---
+
+(module
+  (ctypedef_statement
+    (class_definition
+      (identifier)
+      (identifier)
+      (external_definition
+        (c_type
+          (identifier))))))
+
+=====================================
+External definition with complex module path
+=====================================
+ctypedef class numpy.ndarray.SubArray [object ndarray_sub]
+---
+
+(module
+  (ctypedef_statement
+    (class_definition
+      (identifier)
+      (identifier)
+      (identifier)
+      (external_definition
+        (c_type
+          (identifier))))))
+
+=====================================
+External definition with inheritance, no body
+=====================================
+ctypedef class MyList(list) [object mylistobject]
+---
+
+(module
+  (ctypedef_statement
+    (class_definition
+      (identifier)
+      (c_type
+        (identifier))
+      (external_definition
+        (c_type
+          (identifier))))))
+
+=====================================
+External definition with inheritance and body
+=====================================
+ctypedef class FastArray(object) [object fastarray]:
+   cdef double *data
+   cdef int size
+---
+
+(module
+  (ctypedef_statement
+    (class_definition
+      (identifier)
+      (c_type
+        (identifier))
+      (external_definition
+        (c_type
+          (identifier)))
+      (block
+        (cdef_statement
+          (cvar_def
+            (maybe_typed_name
+              (int_type)
+              (type_qualifier)
+              (identifier))))
+        (cdef_statement
+          (cvar_def
+            (maybe_typed_name
+              (int_type)
+              (identifier))))))))
+
+=====================================
+Multiple module parts with type
+=====================================
+ctypedef class pkg.subpkg.Vector [type vector_struct]
+---
+
+(module
+  (ctypedef_statement
+    (class_definition
+      (identifier)
+      (identifier)
+      (identifier)
+      (external_definition
+        (c_type
+          (identifier))))))
+
+=====================================
+With storage class modifiers
+=====================================
+public ctypedef class SharedObj [object sharedobject]
+---
+
+(module
+  (ctypedef_statement
+    (storageclass)
+    (class_definition
+      (identifier)
+      (external_definition
+        (c_type
+          (identifier))))))
+
+=====================================
+With template parameter and body
+=====================================
+ctypedef class Buffer(object) [object generic_buffer]:
+   cdef T *ptr
+---
+
+(module
+  (ctypedef_statement
+    (class_definition
+      (identifier)
+      (c_type
+        (identifier))
+      (external_definition
+        (c_type
+          (identifier)))
+      (block
+        (cdef_statement
+          (cvar_def
+            (maybe_typed_name
+              (identifier)
+              (type_qualifier)
+              (identifier))))))))
+
+=====================================
+Forward declaration
+=====================================
+ctypedef class ForwardDeclared
+---
+
+(module
+  (ctypedef_statement
+    (class_definition
+      (identifier))))
+
+=====================================
+Simple class with body only
+=====================================
+ctypedef class SimpleClass:
+   cdef int x
+   cdef double y
+---
+
+(module
+  (ctypedef_statement
+    (class_definition
+      (identifier)
+      (block
+        (cdef_statement
+          (cvar_def
+            (maybe_typed_name
+              (int_type)
+              (identifier))))
+        (cdef_statement
+          (cvar_def
+            (maybe_typed_name
+              (int_type)
+              (identifier))))))))

@@ -81,11 +81,15 @@ module.exports = grammar(Python, {
         repeat(seq(".", $.identifier)),
         optional(seq("(", $.c_type, ")")),
         choice(
+          field("name_specification", $.external_definition),
           seq(
-            choice(
-              field("superclasses", optional($.argument_list)),
-              field("name_specification", optional($.external_definition)),
-            ),
+            field("superclasses", optional($.argument_list)),
+            ":",
+            field("body", $._suite),
+          ),
+          seq(
+            field("superclasses", optional($.argument_list)),
+            field("name_specification", $.external_definition),
             ":",
             field("body", $._suite),
           ),
@@ -438,6 +442,7 @@ module.exports = grammar(Python, {
 
     ctypedef_statement: $ =>
       seq(
+        repeat($.storageclass),
         "ctypedef",
         choice($.cvar_decl, $.struct, $.enum, $.fused, $.class_definition, $.extern_block),
         optional(";"),
