@@ -622,6 +622,7 @@ module.exports = grammar(Python, {
         seq(
           $._indent,
           repeat(choice(
+            $.ctypedef_statement,
             $.cvar_def,
             $.cppclass,
           )),
