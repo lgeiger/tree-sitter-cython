@@ -587,3 +587,25 @@ cdef numeric add(numeric a, numeric b)
           (maybe_typed_name
             (identifier)
             (identifier)))))))
+
+================================================================================
+Cython ellipsis function
+================================================================================
+
+cdef cppclass Test:
+    int func(...)
+
+--------------------------------------------------------------------------------
+
+(module
+  (cdef_statement
+    (cdef_type_declaration
+      (ctype_declaration
+        (cppclass
+          (identifier)
+          (cvar_def
+            (maybe_typed_name
+              (int_type)
+              (identifier))
+            (c_function_definition
+              (c_parameters))))))))
