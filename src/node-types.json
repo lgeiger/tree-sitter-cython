@@ -1416,6 +1416,10 @@
           "named": true
         },
         {
+          "type": "ctypedef_statement",
+          "named": true
+        },
+        {
           "type": "cvar_def",
           "named": true
         },

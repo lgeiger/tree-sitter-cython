@@ -958,3 +958,24 @@ ctypedef class SimpleClass:
             (maybe_typed_name
               (int_type)
               (identifier))))))))
+
+=====================================
+Class with internal typedef
+=====================================
+cdef cppclass Example[T]:
+    ctypedef T LocalAlias
+---
+
+(module
+  (cdef_statement
+    (cdef_type_declaration
+      (ctype_declaration
+        (cppclass
+          (identifier)
+          (template_params
+            (identifier))
+          (ctypedef_statement
+            (cvar_decl
+              (c_type
+                (identifier))
+              (identifier))))))))
