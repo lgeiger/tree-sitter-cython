@@ -508,6 +508,7 @@ module.exports = grammar(Python, {
             optional(seq(":", $.c_type)),
             optional(seq("=", choice($.expression, "*"))),
           )),
+          optional(seq(",", "...")),
           optional(","),
         ),
       ),

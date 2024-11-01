@@ -611,6 +611,188 @@ cdef cppclass Test:
               (c_parameters))))))))
 
 =====================================
+Variadic function declaration in extern block
+=====================================
+cdef extern from "stdio.h":
+    int printf(const char *format, ...)
+    int scanf(const char *format, ...)
+---
+
+(module
+  (cdef_statement
+    (extern_block
+      (string
+        (string_start)
+        (string_content)
+        (string_end))
+      (extern_suite
+        (cvar_decl
+          (c_type
+            (int_type))
+          (c_name
+            (identifier))
+          (c_function_definition
+            (c_parameters
+              (maybe_typed_name
+                (int_type)
+                (type_qualifier)
+                (identifier)))))
+        (cvar_decl
+          (c_type
+            (int_type))
+          (c_name
+            (identifier))
+          (c_function_definition
+            (c_parameters
+              (maybe_typed_name
+                (int_type)
+                (type_qualifier)
+                (identifier)))))))))
+
+=====================================
+Simple variadic function
+=====================================
+cdef int varargs_func(...)
+---
+
+(module
+  (cdef_statement
+    (cvar_def
+      (maybe_typed_name
+        (int_type)
+        (identifier))
+      (c_function_definition
+        (c_parameters)))))
+
+=====================================
+Variadic function with parameters
+=====================================
+cdef int format_message(char *prefix, int count, ...)
+---
+
+(module
+  (cdef_statement
+    (cvar_def
+      (maybe_typed_name
+        (int_type)
+        (identifier))
+      (c_function_definition
+        (c_parameters
+          (maybe_typed_name
+            (int_type)
+            (type_qualifier)
+            (identifier))
+          (maybe_typed_name
+            (int_type)
+            (identifier)))))))
+
+=====================================
+Multiple variadic declarations
+=====================================
+cdef:
+    int func1(int x, ...)
+    void func2(...)
+    double func3(double x, double y, ...)
+---
+
+(module
+  (cdef_statement
+    (cvar_def
+      (maybe_typed_name
+        (int_type)
+        (identifier))
+      (c_function_definition
+        (c_parameters
+          (maybe_typed_name
+            (int_type)
+            (identifier)))))
+    (cvar_def
+      (maybe_typed_name
+        (identifier)
+        (identifier))
+      (c_function_definition
+        (c_parameters)))
+    (cvar_def
+      (maybe_typed_name
+        (int_type)
+        (identifier))
+      (c_function_definition
+        (c_parameters
+          (maybe_typed_name
+            (int_type)
+            (identifier))
+          (maybe_typed_name
+            (int_type)
+            (identifier)))))))
+
+=====================================
+Variadic function with modifiers
+=====================================
+cdef public int logging(const char *level, ...)
+---
+
+(module
+  (cdef_statement
+    (cvar_def
+      (storageclass)
+      (maybe_typed_name
+        (int_type)
+        (identifier))
+      (c_function_definition
+        (c_parameters
+          (maybe_typed_name
+            (int_type)
+            (type_qualifier)
+            (identifier)))))))
+
+=====================================
+Variadic method in cdef class
+=====================================
+cdef class Logger:
+    cdef int log(self, const char *msg, ...)
+---
+
+(module
+  (cdef_statement
+    (cdef_type_declaration
+      (class_definition
+        (identifier)
+        (block
+          (cdef_statement
+            (cvar_def
+              (maybe_typed_name
+                (int_type)
+                (identifier))
+              (c_function_definition
+                (c_parameters
+                  (maybe_typed_name
+                    (identifier))
+                  (maybe_typed_name
+                    (int_type)
+                    (type_qualifier)
+                    (identifier)))))))))))
+
+=====================================
+Variadic typedef function pointer
+=====================================
+ctypedef int (*printf_func)(const char*, ...)
+---
+
+(module
+  (ctypedef_statement
+    (cvar_decl
+      (c_type
+        (int_type))
+      (c_name
+        (type_qualifier)
+        (identifier))
+      (c_function_definition
+        (c_parameters
+          (maybe_typed_name
+            (int_type)
+            (type_qualifier)))))))
+
+=====================================
 Simple external definition
 =====================================
 ctypedef class array.array [object arrayobject]
