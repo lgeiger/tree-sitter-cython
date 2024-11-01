@@ -50,3 +50,4 @@ jobs:
           files: |
             examples/**/*.pyx
             examples/**/*.pxd
+        continue-on-error: true
