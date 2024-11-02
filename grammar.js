@@ -470,10 +470,16 @@ module.exports = grammar(Python, {
         ),
       ),
 
+    template_default: $ =>
+      seq("=", "*"),
+
+    template_param: $ =>
+      seq($.identifier, optional($.template_default)),
+
     template_params: $ =>
       seq(
         "[",
-        commaSep1($.identifier),
+        commaSep1($.template_param),
         "]",
       ),
 

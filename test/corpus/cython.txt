@@ -973,9 +973,35 @@ cdef cppclass Example[T]:
         (cppclass
           (identifier)
           (template_params
-            (identifier))
+            (template_param
+              (identifier)))
           (ctypedef_statement
             (cvar_decl
               (c_type
                 (identifier))
+              (identifier))))))))
+
+=====================================
+Class with default template params
+=====================================
+cdef cppclass SomeClass[U, V, W=*]:
+    pass
+---
+
+(module
+  (cdef_statement
+    (cdef_type_declaration
+      (ctype_declaration
+        (cppclass
+          (identifier)
+          (template_params
+            (template_param
+              (identifier))
+            (template_param
+              (identifier))
+            (template_param
+              (identifier)
+              (template_default)))
+          (cvar_def
+            (maybe_typed_name
               (identifier))))))))
