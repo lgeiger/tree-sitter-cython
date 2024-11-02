@@ -3732,7 +3732,12 @@
     }
   },
   {
-    "type": "template_params",
+    "type": "template_default",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "template_param",
     "named": true,
     "fields": {},
     "children": {
@@ -3741,6 +3746,25 @@
       "types": [
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "template_default",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "template_params",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "template_param",
           "named": true
         }
       ]
