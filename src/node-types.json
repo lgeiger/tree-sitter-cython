@@ -1113,7 +1113,7 @@
     }
   },
   {
-    "type": "cdef_statement",
+    "type": "cdef_definition_block",
     "named": true,
     "fields": {},
     "children": {
@@ -1142,6 +1142,33 @@
         },
         {
           "type": "storageclass",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "cdef_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "cdef_definition_block",
+          "named": true
+        },
+        {
+          "type": "cdef_type_declaration",
+          "named": true
+        },
+        {
+          "type": "cvar_def",
+          "named": true
+        },
+        {
+          "type": "extern_block",
           "named": true
         }
       ]

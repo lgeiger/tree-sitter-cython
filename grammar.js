@@ -164,15 +164,18 @@ module.exports = grammar(Python, {
           $.cvar_def,
           $.cdef_type_declaration,
           $.extern_block,
-          seq(
-            repeat($.storageclass),
-            optional(choice($.identifier, $.keyword_identifier)),
-            ":",
-            $._indent,
-            repeat1(choice($.cvar_def, $.ctypedef_statement, $.cdef_type_declaration, $.extern_block)),
-            $._dedent,
-          ),
+          $.cdef_definition_block,
         ),
+      ),
+
+    cdef_definition_block: $ =>
+      seq(
+        repeat($.storageclass),
+        optional(choice($.identifier, $.keyword_identifier)),
+        ":",
+        $._indent,
+        repeat1(choice($.cvar_def, $.ctypedef_statement, $.cdef_type_declaration, $.extern_block)),
+        $._dedent,
       ),
 
     cvar_def: $ =>
