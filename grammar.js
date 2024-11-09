@@ -396,7 +396,7 @@ module.exports = grammar(Python, {
             optional("complex"),
             repeat($.type_qualifier),
           )),
-          field("name", optional(choice($.identifier, $.operator_name))),
+          field("name", optional(choice($.identifier, $.operator_name, $.c_function_pointer_name))),
           repeat($.type_qualifier),
         ),
         seq(
@@ -405,6 +405,9 @@ module.exports = grammar(Python, {
           repeat($.type_qualifier),
         ),
       ),
+
+    c_function_pointer_name: $ =>
+      seq("(", "*", field("name", $.identifier), ")"),
 
     // type_qualifier: '*' | '**' | '&' | type_index ('.' NAME [type_index])*
     type_qualifier: $ =>

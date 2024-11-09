@@ -1008,3 +1008,23 @@ cdef cppclass SomeClass[U, V, W=*]:
           (cvar_def
             (maybe_typed_name
               (identifier))))))))
+
+=====================================
+Declaration of a C function pointer variable
+=====================================
+cdef const int (*pfunc_add)(const char*, int)
+---
+(module
+  (cdef_statement
+    (cvar_def
+      (maybe_typed_name
+        (int_type)
+        (c_function_pointer_name
+          (identifier)))
+      (c_function_definition
+        (c_parameters
+          (maybe_typed_name
+            (int_type)
+            (type_qualifier))
+          (maybe_typed_name
+            (int_type)))))))

@@ -865,6 +865,22 @@
     }
   },
   {
+    "type": "c_function_pointer_name",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "c_name",
     "named": true,
     "fields": {},
@@ -3067,6 +3083,10 @@
         "multiple": false,
         "required": false,
         "types": [
+          {
+            "type": "c_function_pointer_name",
+            "named": true
+          },
           {
             "type": "identifier",
             "named": true
