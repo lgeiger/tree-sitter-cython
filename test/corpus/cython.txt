@@ -1028,3 +1028,9 @@ cdef const int (*pfunc_add)(const char*, int)
             (type_qualifier))
           (maybe_typed_name
             (int_type)))))))
+=====================================
+sizeof() with expression argument
+=====================================
+cdef int i, j, k
+i = sizeof(j + k)
+--

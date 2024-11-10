@@ -9357,8 +9357,17 @@
             "value": "("
           },
           {
-            "type": "SYMBOL",
-            "name": "c_type"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "c_type"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "expression"
+              }
+            ]
           },
           {
             "type": "STRING",

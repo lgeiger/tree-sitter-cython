@@ -3591,6 +3591,10 @@
         {
           "type": "c_type",
           "named": true
+        },
+        {
+          "type": "expression",
+          "named": true
         }
       ]
     }

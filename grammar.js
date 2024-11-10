@@ -686,7 +686,7 @@ module.exports = grammar(Python, {
         seq(
           "sizeof",
           "(",
-          $.c_type,
+          choice($.c_type, $.expression),
           ")",
         ),
       ),
