@@ -164,15 +164,18 @@ module.exports = grammar(Python, {
           $.cvar_def,
           $.cdef_type_declaration,
           $.extern_block,
-          seq(
-            repeat($.storageclass),
-            optional(choice($.identifier, $.keyword_identifier)),
-            ":",
-            $._indent,
-            repeat1(choice($.cvar_def, $.ctypedef_statement, $.cdef_type_declaration, $.extern_block)),
-            $._dedent,
-          ),
+          $.cdef_definition_block,
         ),
+      ),
+
+    cdef_definition_block: $ =>
+      seq(
+        repeat($.storageclass),
+        optional(choice($.identifier, $.keyword_identifier)),
+        ":",
+        $._indent,
+        repeat1(choice($.cvar_def, $.ctypedef_statement, $.cdef_type_declaration, $.extern_block)),
+        $._dedent,
       ),
 
     cvar_def: $ =>
@@ -393,7 +396,7 @@ module.exports = grammar(Python, {
             optional("complex"),
             repeat($.type_qualifier),
           )),
-          field("name", optional(choice($.identifier, $.operator_name))),
+          field("name", optional(choice($.identifier, $.operator_name, $.c_function_pointer_name))),
           repeat($.type_qualifier),
         ),
         seq(
@@ -402,6 +405,9 @@ module.exports = grammar(Python, {
           repeat($.type_qualifier),
         ),
       ),
+
+    c_function_pointer_name: $ =>
+      seq("(", "*", field("name", $.identifier), ")"),
 
     // type_qualifier: '*' | '**' | '&' | type_index ('.' NAME [type_index])*
     type_qualifier: $ =>
@@ -680,7 +686,7 @@ module.exports = grammar(Python, {
         seq(
           "sizeof",
           "(",
-          $.c_type,
+          choice($.c_type, $.expression),
           ")",
         ),
       ),

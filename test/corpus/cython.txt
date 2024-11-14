@@ -274,34 +274,35 @@ cdef ullong factorial(int n):
 
 (module
   (cdef_statement
-    (cvar_def
-      (maybe_typed_name
-        (int_type)
-        (identifier)))
-    (cvar_def
-      (maybe_typed_name
-        (int_type)
-        (identifier)))
-    (cvar_def
-      (maybe_typed_name
-        (identifier)
-        (identifier)))
-    (cvar_def
-      (maybe_typed_name
-        (int_type)
-        (type_qualifier)
-        (identifier)))
-    (cvar_def
-      (maybe_typed_name
-        (int_type)
-        (type_qualifier
-          (type_index
-            (memory_view_index)))
-        (identifier)))
-    (cvar_def
-      (maybe_typed_name
-        (int_type)
-        (identifier))))
+    (cdef_definition_block
+      (cvar_def
+        (maybe_typed_name
+          (int_type)
+          (identifier)))
+      (cvar_def
+        (maybe_typed_name
+          (int_type)
+          (identifier)))
+      (cvar_def
+        (maybe_typed_name
+          (identifier)
+          (identifier)))
+      (cvar_def
+        (maybe_typed_name
+          (int_type)
+          (type_qualifier)
+          (identifier)))
+      (cvar_def
+        (maybe_typed_name
+          (int_type)
+          (type_qualifier
+            (type_index
+              (memory_view_index)))
+          (identifier)))
+      (cvar_def
+        (maybe_typed_name
+          (int_type)
+          (identifier)))))
   (ctypedef_statement
     (cvar_decl
       (c_type
@@ -475,14 +476,15 @@ cdef numeric add(numeric a, numeric b)
         (identifier)
         (block
           (cdef_statement
-            (cvar_def
-              (maybe_typed_name
-                (int_type)
-                (identifier)))
-            (cvar_def
-              (maybe_typed_name
-                (int_type)
-                (identifier))))
+            (cdef_definition_block
+              (cvar_def
+                (maybe_typed_name
+                  (int_type)
+                  (identifier)))
+              (cvar_def
+                (maybe_typed_name
+                  (int_type)
+                  (identifier)))))
           (cdef_statement
             (cvar_def
               (maybe_typed_name
@@ -697,33 +699,34 @@ cdef:
 
 (module
   (cdef_statement
-    (cvar_def
-      (maybe_typed_name
-        (int_type)
-        (identifier))
-      (c_function_definition
-        (c_parameters
-          (maybe_typed_name
-            (int_type)
-            (identifier)))))
-    (cvar_def
-      (maybe_typed_name
-        (identifier)
-        (identifier))
-      (c_function_definition
-        (c_parameters)))
-    (cvar_def
-      (maybe_typed_name
-        (int_type)
-        (identifier))
-      (c_function_definition
-        (c_parameters
-          (maybe_typed_name
-            (int_type)
-            (identifier))
-          (maybe_typed_name
-            (int_type)
-            (identifier)))))))
+    (cdef_definition_block
+      (cvar_def
+        (maybe_typed_name
+          (int_type)
+          (identifier))
+        (c_function_definition
+          (c_parameters
+            (maybe_typed_name
+              (int_type)
+              (identifier)))))
+      (cvar_def
+        (maybe_typed_name
+          (identifier)
+          (identifier))
+        (c_function_definition
+          (c_parameters)))
+      (cvar_def
+        (maybe_typed_name
+          (int_type)
+          (identifier))
+        (c_function_definition
+          (c_parameters
+            (maybe_typed_name
+              (int_type)
+              (identifier))
+            (maybe_typed_name
+              (int_type)
+              (identifier))))))))
 
 =====================================
 Variadic function with modifiers
@@ -1005,3 +1008,29 @@ cdef cppclass SomeClass[U, V, W=*]:
           (cvar_def
             (maybe_typed_name
               (identifier))))))))
+
+=====================================
+Declaration of a C function pointer variable
+=====================================
+cdef const int (*pfunc_add)(const char*, int)
+---
+(module
+  (cdef_statement
+    (cvar_def
+      (maybe_typed_name
+        (int_type)
+        (c_function_pointer_name
+          (identifier)))
+      (c_function_definition
+        (c_parameters
+          (maybe_typed_name
+            (int_type)
+            (type_qualifier))
+          (maybe_typed_name
+            (int_type)))))))
+=====================================
+sizeof() with expression argument
+=====================================
+cdef int i, j, k
+i = sizeof(j + k)
+--
