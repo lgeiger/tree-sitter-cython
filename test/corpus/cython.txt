@@ -1033,4 +1033,71 @@ sizeof() with expression argument
 =====================================
 cdef int i, j, k
 i = sizeof(j + k)
---
+---
+(module
+  (cdef_statement
+    (cvar_def
+      (maybe_typed_name
+        (int_type)
+        (identifier))
+      (identifier)
+      (identifier)))
+  (expression_statement
+    (assignment
+      (identifier)
+      (sizeof_expression
+        (binary_operator
+          (identifier)
+          (identifier))))))
+=====================================
+sizeof() with function argument
+=====================================
+cdef struct Spam:
+    int i
+
+sizeof(Spam (*)())
+---
+(module
+  (cdef_statement
+    (cdef_type_declaration
+      (ctype_declaration
+        (struct
+          (identifier)
+          (struct_suite
+            (cvar_decl
+              (c_type
+                (int_type))
+              (identifier)))))))
+  (expression_statement
+    (sizeof_expression
+      (c_function_argument_type
+        (c_type
+          (identifier))
+        (c_parameters)))))
+=====================================
+Function definition with function argument
+=====================================
+cdef extern from *:
+  cdef void func(int, int (*)(int, int))
+---
+(module
+  (cdef_statement
+    (extern_block
+      (extern_suite
+        (cvar_decl
+          (c_type
+            (identifier))
+          (c_name
+            (identifier))
+          (c_function_definition
+            (c_parameters
+              (maybe_typed_name
+                (int_type))
+              (c_function_argument_type
+                (c_type
+                  (int_type))
+                (c_parameters
+                  (maybe_typed_name
+                    (int_type))
+                  (maybe_typed_name
+                    (int_type)))))))))))

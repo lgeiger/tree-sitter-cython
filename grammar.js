@@ -511,15 +511,23 @@ module.exports = grammar(Python, {
       ),
 
     c_parameters: $ => seq("(", optional($._typedargslist), ")"),
+
+    // e.g. int (*)(const char, int)
+    c_function_argument_type: $ =>
+      seq($.c_type, "(", "*", ")", $.c_parameters),
+
+    _typedargument: $ =>
+      seq(
+        $.maybe_typed_name,
+        optional(seq(":", $.c_type)),
+        optional(seq("=", choice($.expression, "*"))),
+      ),
+
     _typedargslist: $ =>
       choice(
         "...",
         seq(
-          commaSep1(seq(
-            $.maybe_typed_name,
-            optional(seq(":", $.c_type)),
-            optional(seq("=", choice($.expression, "*"))),
-          )),
+          commaSep1(choice($._typedargument, $.c_function_argument_type)),
           optional(seq(",", "...")),
           optional(","),
         ),
@@ -686,7 +694,7 @@ module.exports = grammar(Python, {
         seq(
           "sizeof",
           "(",
-          choice($.c_type, $.expression),
+          choice($.c_function_argument_type, $.c_type, $.expression),
           ")",
         ),
       ),
