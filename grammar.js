@@ -729,6 +729,10 @@ module.exports = grammar(Python, {
           choice("in", "from"),
         )),
         field("right", $._expressions),
+        optional(seq(
+          "by",
+          $._expressions,
+        )),
         ":",
         field("body", $._suite),
         field("alternative", optional($.else_clause)),

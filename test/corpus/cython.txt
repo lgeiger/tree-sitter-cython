@@ -1101,3 +1101,23 @@ cdef extern from *:
                     (int_type))
                   (maybe_typed_name
                     (int_type)))))))))))
+=====================================
+For-from loop with "by" argument
+=====================================
+for i from 0 <= i < 10 by 2:
+    print(i)
+---
+(module
+  (for_statement
+    (identifier)
+    (comparison_operator
+      (integer)
+      (identifier)
+      (integer))
+    (integer)
+    (block
+      (expression_statement
+        (call
+          (identifier)
+          (argument_list
+            (identifier)))))))

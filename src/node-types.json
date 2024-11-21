@@ -2358,6 +2358,20 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "expression_list",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -4646,6 +4660,10 @@
   },
   {
     "type": "break",
+    "named": false
+  },
+  {
+    "type": "by",
     "named": false
   },
   {
