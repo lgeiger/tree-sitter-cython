@@ -129,7 +129,8 @@ module.exports = grammar(Python, {
     _compound_statement: ($, original) =>
       choice(
         original,
-        $.def_statement,
+        $.DEF_statement,
+        $.IF_statement,
         $.cdef_statement,
         $.ctypedef_statement,
         $.property_definition,
@@ -148,7 +149,7 @@ module.exports = grammar(Python, {
         ),
       ),
 
-    def_statement: $ =>
+    DEF_statement: $ =>
       seq(
         "DEF",
         field("name", $.identifier),
@@ -156,6 +157,28 @@ module.exports = grammar(Python, {
         $.expression,
         $._newline,
       ),
+
+    IF_statement: $ => seq(
+      "IF",
+      field("condition", $.expression),
+      ":",
+      field("consequence", $._suite),
+      repeat(field("alternative", $.ELIF_clause)),
+      optional(field("alternative", $.ELSE_clause)),
+    ),
+
+    ELIF_clause: $ => seq(
+      "ELIF",
+      field("condition", $.expression),
+      ":",
+      field("consequence", $._suite),
+    ),
+
+    ELSE_clause: $ => seq(
+      "ELSE",
+      ":",
+      field("body", $._suite),
+    ),
 
     cdef_statement: $ =>
       seq(

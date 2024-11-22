@@ -1121,3 +1121,34 @@ for i from 0 <= i < 10 by 2:
           (identifier)
           (argument_list
             (identifier)))))))
+=====================================
+IF statement
+=====================================
+IF True:
+    pass
+ELIF False:
+    pass
+ELSE:
+    pass
+---
+(module
+  (IF_statement
+    (true)
+    (block
+      (pass_statement))
+    (ELIF_clause
+      (false)
+      (block
+        (pass_statement)))
+    (ELSE_clause
+      (block
+        (pass_statement)))))
+=====================================
+DEF statement
+=====================================
+DEF x = 1
+---
+(module
+  (DEF_statement
+    (identifier)
+    (integer)))
