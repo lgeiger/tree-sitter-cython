@@ -1152,3 +1152,21 @@ DEF x = 1
   (DEF_statement
     (identifier)
     (integer)))
+=====================================
+Typed parameter with quoted type
+=====================================
+def func(x: "cython.int"):
+    pass
+---
+(module
+  (function_definition
+    (identifier)
+    (parameters
+      (typed_parameter
+        (identifier)
+        (string
+          (string_start)
+          (string_content)
+          (string_end))))
+    (block
+      (pass_statement))))
