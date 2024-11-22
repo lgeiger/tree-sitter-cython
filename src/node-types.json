@@ -4200,6 +4200,10 @@
           {
             "type": "c_type",
             "named": true
+          },
+          {
+            "type": "string",
+            "named": true
           }
         ]
       }
