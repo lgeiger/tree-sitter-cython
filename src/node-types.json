@@ -1012,6 +1012,21 @@
     }
   },
   {
+    "type": "c_integer_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "c_integer_signedness",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "c_name",
     "named": true,
     "fields": {},
@@ -2847,6 +2862,21 @@
     "fields": {}
   },
   {
+    "type": "integer",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "c_integer_type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "interpolation",
     "named": true,
     "fields": {
@@ -4593,6 +4623,30 @@
     "named": false
   },
   {
+    "type": "0B",
+    "named": false
+  },
+  {
+    "type": "0O",
+    "named": false
+  },
+  {
+    "type": "0X",
+    "named": false
+  },
+  {
+    "type": "0b",
+    "named": false
+  },
+  {
+    "type": "0o",
+    "named": false
+  },
+  {
+    "type": "0x",
+    "named": false
+  },
+  {
     "type": ":",
     "named": false
   },
@@ -4769,6 +4823,10 @@
     "named": false
   },
   {
+    "type": "c_integer_signedness",
+    "named": true
+  },
+  {
     "type": "case",
     "named": false
   },
@@ -4935,10 +4993,6 @@
   {
     "type": "int",
     "named": false
-  },
-  {
-    "type": "integer",
-    "named": true
   },
   {
     "type": "is",

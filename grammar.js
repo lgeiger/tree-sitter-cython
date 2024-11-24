@@ -48,6 +48,43 @@ module.exports = grammar(Python, {
 
     run_directive: $ => seq("PYTHON", /[^\r\n]+/, $._newline),
 
+    c_integer_signedness: $ =>
+      /[uU]/,
+
+    c_integer_type: $ => choice(
+      seq(
+        optional($.c_integer_signedness),
+        /[lL]/,
+        optional(/[lL]/),
+      ),
+      $.c_integer_signedness,
+    ),
+
+    integer: $ => choice(
+      seq(
+        choice("0x", "0X"),
+        repeat1(/_?[A-Fa-f0-9]+/),
+        optional($.c_integer_type),
+      ),
+      seq(
+        choice("0o", "0O"),
+        repeat1(/_?[0-7]+/),
+        optional($.c_integer_type),
+      ),
+      seq(
+        choice("0b", "0B"),
+        repeat1(/_?[0-1]+/),
+        optional($.c_integer_type),
+      ),
+      seq(
+        repeat1(/[0-9]+_?/),
+        choice(
+          optional($.c_integer_type), // long numbers
+          optional(/[jJ]/), // complex numbers
+        ),
+      ),
+    ),
+
     // Cython allows 'cimport'
     import_statement: $ =>
       seq(
