@@ -1170,3 +1170,20 @@ def func(x: "cython.int"):
           (string_end))))
     (block
       (pass_statement))))
+=====================================
+Char literals
+=====================================
+c"literal"
+c'literal'
+---
+(module
+  (expression_statement
+    (string
+      (string_start)
+      (string_content)
+      (string_end)))
+  (expression_statement
+    (string
+      (string_start)
+      (string_content)
+      (string_end))))
