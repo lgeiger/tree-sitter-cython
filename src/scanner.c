@@ -29,6 +29,7 @@ typedef enum {
   Format = 1 << 4,
   Triple = 1 << 5,
   Bytes = 1 << 6,
+  Char = 1 << 7,
 } Flags;
 
 typedef struct {
@@ -43,6 +44,10 @@ static inline bool is_format(Delimiter *delimiter) {
 
 static inline bool is_raw(Delimiter *delimiter) {
   return delimiter->flags & Raw;
+}
+
+static inline bool is_char(Delimiter *delimiter) {
+  return delimiter->flags & Char;
 }
 
 static inline bool is_triple(Delimiter *delimiter) {
@@ -71,6 +76,8 @@ static inline void set_format(Delimiter *delimiter) {
 }
 
 static inline void set_raw(Delimiter *delimiter) { delimiter->flags |= Raw; }
+
+static inline void set_char(Delimiter *delimiter) { delimiter->flags |= Char; }
 
 static inline void set_triple(Delimiter *delimiter) {
   delimiter->flags |= Triple;
@@ -336,6 +343,8 @@ bool tree_sitter_cython_external_scanner_scan(void *payload, TSLexer *lexer,
         set_format(&delimiter);
       } else if (lexer->lookahead == 'r' || lexer->lookahead == 'R') {
         set_raw(&delimiter);
+      } else if (lexer->lookahead == 'c'){
+        set_char(&delimiter);
       } else if (lexer->lookahead == 'b' || lexer->lookahead == 'B') {
         set_bytes(&delimiter);
       } else if (lexer->lookahead != 'u' && lexer->lookahead != 'U') {
