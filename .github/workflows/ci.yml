@@ -42,6 +42,7 @@ jobs:
       - name: Run tests
         uses: tree-sitter/parser-test-action@v2
         with:
+          generate: true
           test-rust: ${{runner.os == 'Linux'}}
       - name: Parse examples
         id: test
