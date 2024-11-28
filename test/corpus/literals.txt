@@ -16,6 +16,23 @@ Integers
 0O1_1
 0L
 
+1_0
+1_0L
+1_0LL
+1_0UL
+10ULL
+
+1_0l
+1_0ll
+1_0ul
+10ull
+
+1_0l
+1_0lL
+10ulL
+
+1_0u
+
 --------------------------------------------------------------------------------
 
 (module
@@ -46,7 +63,52 @@ Integers
   (expression_statement
     (integer))
   (expression_statement
-    (integer)))
+    (integer
+      (c_integer_type)))
+  (expression_statement
+    (integer))
+  (expression_statement
+    (integer
+      (c_integer_type)))
+  (expression_statement
+    (integer
+      (c_integer_type)))
+  (expression_statement
+    (integer
+      (c_integer_type
+        (c_integer_signedness))))
+  (expression_statement
+    (integer
+      (c_integer_type
+        (c_integer_signedness))))
+  (expression_statement
+    (integer
+      (c_integer_type)))
+  (expression_statement
+    (integer
+      (c_integer_type)))
+  (expression_statement
+    (integer
+      (c_integer_type
+        (c_integer_signedness))))
+  (expression_statement
+    (integer
+      (c_integer_type
+        (c_integer_signedness))))
+  (expression_statement
+    (integer
+      (c_integer_type)))
+  (expression_statement
+    (integer
+      (c_integer_type)))
+  (expression_statement
+    (integer
+      (c_integer_type
+        (c_integer_signedness))))
+  (expression_statement
+    (integer
+      (c_integer_type
+        (c_integer_signedness)))))
 
 ================================================================================
 Floats
