@@ -1,0 +1,148 @@
+=====================================
+Basic for from loop
+=====================================
+for i from 0 <= i < 10:
+  pass
+
+
+---
+(module                   
+  (for_statement             
+    (for_from_loop     
+      (identifier)                               
+      (integer)                                                                                                                                                                                                  
+      (for_from_relation)                                                                             
+      (identifier)
+      (for_from_relation)
+      (integer))
+    (block
+      (pass_statement))))
+=====================================
+For from loop with increment
+=====================================
+for c from 0 <= c < 10 by .5:
+  pass
+---
+(module
+  (for_statement
+    (for_from_loop
+      (identifier)
+      (integer)
+      (for_from_relation)
+      (identifier)
+      (for_from_relation)
+      (integer)
+      (float))
+    (block
+      (pass_statement))))
+=====================================
+For from loop with identifier bound
+=====================================
+bound = 10
+step = 1
+
+for i from 0 <= i < bound:
+  pass
+
+for i from 0 <= i < bound by step:
+  pass
+
+for i from 0 <= i < 5+5 by get_step():
+  pass
+
+for i from k * 42 <= i <= j / 18:
+  pass
+---
+(module
+  (expression_statement
+    (assignment
+      (identifier)
+      (integer)))
+  (expression_statement
+    (assignment
+      (identifier)
+      (integer)))
+  (for_statement
+    (for_from_loop
+      (identifier)
+      (integer)
+      (for_from_relation)
+      (identifier)
+      (for_from_relation)
+      (identifier))
+    (block
+      (pass_statement)))
+  (for_statement
+    (for_from_loop
+      (identifier)
+      (integer)
+      (for_from_relation)
+      (identifier)
+      (for_from_relation)
+      (identifier)
+      (identifier))
+    (block
+      (pass_statement)))
+  (for_statement
+    (for_from_loop
+      (identifier)
+      (integer)
+      (for_from_relation)
+      (identifier)
+      (for_from_relation)
+      (binary_operator
+        (integer)
+        (integer))
+      (call
+        (identifier)
+        (argument_list)))
+    (block
+      (pass_statement)))
+  (for_statement
+    (for_from_loop
+      (identifier)
+      (binary_operator
+        (identifier)
+        (integer))
+      (for_from_relation)
+      (identifier)
+      (for_from_relation)
+      (binary_operator
+        (identifier)
+        (integer)))
+    (block
+      (pass_statement))))
+=====================================
+For from with decrement
+=====================================
+for k from 10 > k > 0:
+  pass
+---
+(module
+  (for_statement
+    (for_from_loop
+      (identifier)
+      (integer)
+      (for_from_relation)
+      (identifier)
+      (for_from_relation)
+      (integer))
+    (block
+      (pass_statement))))
+=====================================
+For from with leq bounds
+=====================================
+for i from 0 <= i <= n:
+  pass
+---
+(module
+  (for_statement
+    (for_from_loop
+      (identifier)
+      (integer)
+      (for_from_relation)
+      (identifier)
+      (for_from_relation)
+      (identifier))
+    (block
+      (pass_statement))))
