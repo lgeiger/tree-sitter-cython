@@ -799,7 +799,7 @@ module.exports = grammar(Python, {
       seq(
         field("left", $._left_hand_side),
         "in",
-        field("right", $._expression_within_for_in_clause),
+        field("right", commaSep1($.primary_expression)),
       ),
 
     for_from_relation: $ =>

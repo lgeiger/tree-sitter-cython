@@ -2499,11 +2499,15 @@
         ]
       },
       "right": {
-        "multiple": false,
+        "multiple": true,
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "primary_expression",
             "named": true
           }
         ]

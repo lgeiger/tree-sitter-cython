@@ -1167,3 +1167,17 @@ c'literal'
       (string_start)
       (string_content)
       (string_end))))
+=====================================
+Comma-separated expressions in for loops
+=====================================
+for b in False, True:
+  pass
+---
+(module
+  (for_statement
+    (for_in_loop
+      (identifier)
+      (false)
+      (true))
+    (block
+      (pass_statement))))
