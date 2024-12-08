@@ -2012,8 +2012,12 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
+        {
+          "type": "for_from_loop",
+          "named": true
+        },
         {
           "type": "for_in_clause",
           "named": true
@@ -2501,10 +2505,6 @@
           {
             "type": "expression",
             "named": true
-          },
-          {
-            "type": "expression_list",
-            "named": true
           }
         ]
       }
@@ -2740,8 +2740,12 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
+        {
+          "type": "for_from_loop",
+          "named": true
+        },
         {
           "type": "for_in_clause",
           "named": true
@@ -3195,8 +3199,12 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
+        {
+          "type": "for_from_loop",
+          "named": true
+        },
         {
           "type": "for_in_clause",
           "named": true
@@ -3795,8 +3803,12 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
+        {
+          "type": "for_from_loop",
+          "named": true
+        },
         {
           "type": "for_in_clause",
           "named": true

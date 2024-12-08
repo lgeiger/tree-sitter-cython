@@ -780,12 +780,26 @@ module.exports = grammar(Python, {
         ),
       ),
 
+    _comprehension_for_clause: $ =>
+      choice($.for_in_clause,
+        seq(optional("async"),
+          "for",
+          $.for_from_loop),
+      ),
+
+    _comprehension_clauses: $ => seq(
+      $._comprehension_for_clause,
+      repeat(choice(
+        $._comprehension_for_clause,
+        $.if_clause,
+      )),
+    ),
 
     for_in_loop: $ =>
       seq(
         field("left", $._left_hand_side),
         "in",
-        field("right", $._expressions),
+        field("right", $._expression_within_for_in_clause),
       ),
 
     for_from_relation: $ =>

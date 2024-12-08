@@ -146,3 +146,72 @@ for i from 0 <= i <= n:
       (identifier))
     (block
       (pass_statement))))
+=====================================
+For from comprehension
+=====================================
+b = list(range(10))
+[b[i] for i from 0 <= i < 5]
+{b[i] for i from 0 <= i < 5}
+{i:b[i] for i from 0 <= i < 5}
+[b[i] for 0 <= i < 5]
+---
+(module
+  (expression_statement
+    (assignment
+      (identifier)
+      (call
+        (identifier)
+        (argument_list
+          (call
+            (identifier)
+            (argument_list
+              (integer)))))))
+  (expression_statement
+    (list_comprehension
+      (subscript
+        (identifier)
+        (identifier))
+      (for_from_loop
+        (identifier)
+        (integer)
+        (for_from_relation)
+        (identifier)
+        (for_from_relation)
+        (integer))))
+  (expression_statement
+    (set_comprehension
+      (subscript
+        (identifier)
+        (identifier))
+      (for_from_loop
+        (identifier)
+        (integer)
+        (for_from_relation)
+        (identifier)
+        (for_from_relation)
+        (integer))))
+  (expression_statement
+    (dictionary_comprehension
+      (pair
+        (identifier)
+        (subscript
+          (identifier)
+          (identifier)))
+      (for_from_loop
+        (identifier)
+        (integer)
+        (for_from_relation)
+        (identifier)
+        (for_from_relation)
+        (integer))))
+  (expression_statement
+    (list_comprehension
+      (subscript
+        (identifier)
+        (identifier))
+      (for_from_loop
+        (integer)
+        (for_from_relation)
+        (identifier)
+        (for_from_relation)
+        (integer)))))

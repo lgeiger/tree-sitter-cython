@@ -5510,7 +5510,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "for_in_clause"
+          "name": "_comprehension_for_clause"
         },
         {
           "type": "REPEAT",
@@ -5519,7 +5519,7 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "for_in_clause"
+                "name": "_comprehension_for_clause"
               },
               {
                 "type": "SYMBOL",
@@ -9541,6 +9541,40 @@
         ]
       }
     },
+    "_comprehension_for_clause": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "for_in_clause"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "async"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "STRING",
+              "value": "for"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "for_from_loop"
+            }
+          ]
+        }
+      ]
+    },
     "for_in_loop": {
       "type": "SEQ",
       "members": [
@@ -9561,7 +9595,7 @@
           "name": "right",
           "content": {
             "type": "SYMBOL",
-            "name": "_expressions"
+            "name": "_expression_within_for_in_clause"
           }
         }
       ]
