@@ -2012,8 +2012,12 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
+        {
+          "type": "for_from_loop",
+          "named": true
+        },
         {
           "type": "for_in_clause",
           "named": true
@@ -2374,6 +2378,75 @@
     }
   },
   {
+    "type": "for_from_loop",
+    "named": true,
+    "fields": {
+      "left": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "lower": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "primary_expression",
+            "named": true
+          }
+        ]
+      },
+      "upper": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "primary_expression",
+            "named": true
+          }
+        ]
+      },
+      "var": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "expression_list",
+          "named": true
+        },
+        {
+          "type": "for_from_relation",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "for_from_relation",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "for_in_clause",
     "named": true,
     "fields": {
@@ -2408,6 +2481,40 @@
     }
   },
   {
+    "type": "for_in_loop",
+    "named": true,
+    "fields": {
+      "left": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "pattern",
+            "named": true
+          },
+          {
+            "type": "pattern_list",
+            "named": true
+          }
+        ]
+      },
+      "right": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "primary_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "for_statement",
     "named": true,
     "fields": {
@@ -2430,46 +2537,18 @@
             "named": true
           }
         ]
-      },
-      "left": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "pattern",
-            "named": true
-          },
-          {
-            "type": "pattern_list",
-            "named": true
-          }
-        ]
-      },
-      "right": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "expression",
-            "named": true
-          },
-          {
-            "type": "expression_list",
-            "named": true
-          }
-        ]
       }
     },
     "children": {
       "multiple": false,
-      "required": false,
+      "required": true,
       "types": [
         {
-          "type": "expression",
+          "type": "for_from_loop",
           "named": true
         },
         {
-          "type": "expression_list",
+          "type": "for_in_loop",
           "named": true
         }
       ]
@@ -2665,8 +2744,12 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
+        {
+          "type": "for_from_loop",
+          "named": true
+        },
         {
           "type": "for_in_clause",
           "named": true
@@ -3120,8 +3203,12 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
+        {
+          "type": "for_from_loop",
+          "named": true
+        },
         {
           "type": "for_in_clause",
           "named": true
@@ -3720,8 +3807,12 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
+        {
+          "type": "for_from_loop",
+          "named": true
+        },
         {
           "type": "for_in_clause",
           "named": true

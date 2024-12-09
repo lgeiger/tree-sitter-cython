@@ -65,15 +65,15 @@
 
 ; Loops
 ; not a scope!
-(for_statement
+(for_in_loop
   left: (pattern_list
     (identifier) @local.definition))
 
-(for_statement
+(for_in_loop
   left: (tuple_pattern
     (identifier) @local.definition))
 
-(for_statement
+(for_in_loop
   left: (identifier) @local.definition)
 
 ; not a scope!

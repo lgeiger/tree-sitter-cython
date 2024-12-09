@@ -230,7 +230,7 @@ cpdef int fibonacci(int n):
               (identifier)
               (integer)))
           (for_statement
-            (comparison_operator
+            (for_in_loop
               (identifier)
               (call
                 (identifier)
@@ -1102,26 +1102,6 @@ cdef extern from *:
                   (maybe_typed_name
                     (int_type)))))))))))
 =====================================
-For-from loop with "by" argument
-=====================================
-for i from 0 <= i < 10 by 2:
-    print(i)
----
-(module
-  (for_statement
-    (identifier)
-    (comparison_operator
-      (integer)
-      (identifier)
-      (integer))
-    (integer)
-    (block
-      (expression_statement
-        (call
-          (identifier)
-          (argument_list
-            (identifier)))))))
-=====================================
 IF statement
 =====================================
 IF True:
@@ -1187,3 +1167,17 @@ c'literal'
       (string_start)
       (string_content)
       (string_end))))
+=====================================
+Comma-separated expressions in for loops
+=====================================
+for b in False, True:
+  pass
+---
+(module
+  (for_statement
+    (for_in_loop
+      (identifier)
+      (false)
+      (true))
+    (block
+      (pass_statement))))

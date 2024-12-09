@@ -780,19 +780,55 @@ module.exports = grammar(Python, {
         ),
       ),
 
-    for_statement: $ =>
+    _comprehension_for_clause: $ =>
+      choice($.for_in_clause,
+        seq(optional("async"),
+          "for",
+          $.for_from_loop),
+      ),
+
+    _comprehension_clauses: $ => seq(
+      $._comprehension_for_clause,
+      repeat(choice(
+        $._comprehension_for_clause,
+        $.if_clause,
+      )),
+    ),
+
+    for_in_loop: $ =>
       seq(
-        optional("async"),
-        "for",
-        optional(seq(
-          field("left", $._left_hand_side),
-          choice("in", "from"),
-        )),
-        field("right", $._expressions),
+        field("left", $._left_hand_side),
+        "in",
+        field("right", commaSep1($.primary_expression)),
+      ),
+
+    for_from_relation: $ =>
+      choice("<", "<=", ">", ">="),
+
+    for_from_loop: $ =>
+      seq(
+        optional(
+          seq(
+            field("left", $.identifier),
+            "from",
+          ),
+        ),
+        field("lower", choice($.primary_expression)),
+        $.for_from_relation,
+        field("var", $.identifier),
+        $.for_from_relation,
+        field("upper", choice($.primary_expression)),
         optional(seq(
           "by",
           $._expressions,
         )),
+      ),
+
+    for_statement: $ =>
+      seq(
+        optional("async"),
+        "for",
+        choice($.for_from_loop, $.for_in_loop),
         ":",
         field("body", $._suite),
         field("alternative", optional($.else_clause)),
